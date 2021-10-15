@@ -137,10 +137,8 @@ class LogInActivity : AppCompatActivity() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == REGISTER_REQ) {
-            if (resultCode == Activity.RESULT_OK) {
-                finish()
-            }
+        if (requestCode == REGISTER_REQ && resultCode == Activity.RESULT_OK) {
+            finish()
         } else super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REGISTER_VIA_GOOGLE_REQ) {
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
