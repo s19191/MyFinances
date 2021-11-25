@@ -1,8 +1,10 @@
 package pl.edu.pja.myfinances
 
 import android.app.Activity
+import android.content.ContentValues.TAG
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -26,7 +28,10 @@ class LogInActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+        val gso = GoogleSignInOptions
+            .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken("436610871873-em94jn6ufa6pm66mht82tr0hsscd2o6l.apps.googleusercontent.com")
+//            .requestIdToken(binding.default_web_client_id)
             .requestEmail()
             .build()
 
@@ -41,6 +46,32 @@ class LogInActivity : AppCompatActivity() {
             val signInIntent = mGoogleSignInClient.signInIntent
             startActivityForResult(signInIntent, REGISTER_VIA_GOOGLE_REQ)
         }
+    }
+
+    private fun firebaseAuthWithGoogle(idToken: String) {
+        val credential = GoogleAuthProvider.getCredential(idToken, null)
+        auth.signInWithCredential(credential)
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    Log.d(TAG, "signInWithCredential:success")
+                    //TODO: Do późniejszego usunięcia
+                    val user = auth.currentUser
+                    Toast.makeText(
+                        this,
+                        "Zalogowano ${user?.uid} ${user?.email}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    finish()
+                } else {
+                    Log.w(TAG, "signInWithCredential:failure", task.exception)
+                    //TODO: Do późniejszego usunięcia
+                    Toast.makeText(
+                        this,
+                        "Nieprawidłowe dane logowania!",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
     }
 
     fun logIn(view: View) {
@@ -101,39 +132,6 @@ class LogInActivity : AppCompatActivity() {
 
     fun register(view: View) {
         startActivityForResult(Intent(this, RegisterActivity::class.java), REGISTER_REQ)
-    }
-
-    // Nie wiadomo czemu nie działa
-    fun logInViaGoogle(view: View) {
-        val signInIntent = mGoogleSignInClient.signInIntent
-        startActivityForResult(signInIntent, REGISTER_VIA_GOOGLE_REQ)
-    }
-
-    //Brakuje klucza SSH
-    private fun firebaseAuthWithGoogle(idToken: String) {
-        val credential = GoogleAuthProvider.getCredential(idToken, null)
-        auth.signInWithCredential(credential)
-            .addOnSuccessListener {
-                Toast.makeText(
-                    this,
-                    "Zalogowano ${it.user?.uid} ${it.user?.email}",
-                    Toast.LENGTH_SHORT
-                ).show()
-                finish()
-            }.addOnFailureListener {
-                Toast.makeText(
-                    this,
-                    "Nieprawidłowe dane logowania!",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-//            .addOnCompleteListener(this) { task ->
-//                if (task.isSuccessful) {
-//                    // Sign in success, update UI with the signed-in user's information
-//                    val user: FirebaseUser? = auth.currentUser
-//                } else {
-//                }
-//            }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
