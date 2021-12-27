@@ -6,12 +6,14 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 
 import com.journeyapps.barcodescanner.ScanContract
 import com.journeyapps.barcodescanner.ScanIntentResult
 import com.journeyapps.barcodescanner.ScanOptions
 
 import pl.edu.pja.myfinances.databinding.ActivityMainBinding
+import pl.edu.pja.myfinances.model.Card
 
 
 class MainActivity : AppCompatActivity() {
@@ -30,6 +32,16 @@ class MainActivity : AppCompatActivity() {
                 "Scanned: " + result.contents,
                 Toast.LENGTH_LONG
             ).show()
+            FirebaseDatabase.getInstance()
+                .getReference(auth.uid!!)
+                .child("cards")
+                .push()
+                .setValue(
+                    Card(
+                        "KARTA",
+                        result.contents
+                    )
+                )
         }
     }
 
@@ -45,7 +57,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun scanBarCode(view: View) {
-        barcodeLauncher.launch(ScanOptions())
+        val options = ScanOptions()
+//        options.setDesiredBarcodeFormats(ScanOptions.ONE_D_CODE_TYPES)
+//        options.setPrompt("Scan a barcode")
+//        options.setCameraId(0) // Use a specific camera of the device
+//
+//        options.setBeepEnabled(false)
+//        options.setBarcodeImageEnabled(true)
+        val aaa = barcodeLauncher.launch(options)
     }
 
     fun signOut(view: View) {
