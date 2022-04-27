@@ -7,11 +7,9 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
-
 import com.journeyapps.barcodescanner.ScanContract
 import com.journeyapps.barcodescanner.ScanIntentResult
 import com.journeyapps.barcodescanner.ScanOptions
-
 import pl.edu.pja.myfinances.databinding.ActivityMainBinding
 import pl.edu.pja.myfinances.model.Card
 
@@ -32,6 +30,7 @@ class MainActivity : AppCompatActivity() {
                 "Scanned: " + result.contents,
                 Toast.LENGTH_LONG
             ).show()
+            startActivity(Intent(this, LogInActivity::class.java))
             FirebaseDatabase.getInstance()
                 .getReference(auth.uid!!)
                 .child("cards")
