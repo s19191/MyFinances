@@ -29,30 +29,41 @@ class SaveCardActivity : AppCompatActivity() {
                 "Scanned: " + result.contents,
                 Toast.LENGTH_LONG
             ).show()
+            card.barCode = result.contents
             FirebaseDatabase.getInstance()
                 .getReference(auth.uid!!)
                 .child("cards")
                 .push()
                 .setValue(
-                    Card(
-                        "KARTA",
-                        result.contents
-                    )
+                    card
                 ).addOnCompleteListener {
-                    startActivity(Intent(this, SaveCardActivity::class.java))
+                    finish()
                 }
         }
     }
 
+    lateinit var card: Card
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+
+        auth = FirebaseAuth.getInstance()
+
+        if (auth.currentUser == null) {
+            startActivity(Intent(this, LogInActivity::class.java))
+        }
     }
 
     fun openScanner(view: View) {
         val cardName = binding.cardName.text.toString()
 
         if (cardName.isNotEmpty()) {
+            card = Card(
+                cardName,
+                ""
+            )
+
             val options = ScanOptions()
 //        options.setDesiredBarcodeFormats(ScanOptions.ONE_D_CODE_TYPES)
 //        options.setPrompt("Scan a barcode")
