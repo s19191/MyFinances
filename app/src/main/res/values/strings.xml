@@ -11,5 +11,7 @@
     <string name="title_activity_maps">Map</string>
     <string name="return_label">Cofnij do wszystkich</string>
     <string name="fav_button">Ulubione</string>
-    <string name="barCodeScannerButton_label">Zeskanuj kartę</string>
+    <string name="barCodeScannerButton_label">Dodaj kartę</string>
+    <string name="save_card_button">Zeskanuj kartę</string>
+    <string name="card_name_label">Nazwa karty:</string>
 </resources>
