@@ -6,35 +6,49 @@
     android:layout_height="match_parent"
     tools:context=".SaveCardActivity">
 
-    <Button
-        android:id="@+id/saveCardButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:onClick="openScanner"
-        android:text="@string/save_card_button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardName" />
-
     <TextView
-        android:id="@+id/cardNameLabel"
+        android:id="@+id/saveCard_textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
-        android:text="@string/card_name_label"
+        android:layout_marginEnd="16dp"
+        android:text="@string/activitySaveCard_saveCardTextView_text"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/cardName_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:text="@string/activitySaveCard_cardNameTextView_text"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/saveCard_textView" />
+
     <EditText
-        android:id="@+id/cardName"
+        android:id="@+id/cardName_editText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPersonName"
         android:minHeight="48dp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/cardNameLabel"
+        app:layout_constraintBaseline_toBaselineOf="@+id/cardName_textView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/cardNameLabel" />
+        app:layout_constraintStart_toEndOf="@+id/cardName_textView" />
+
+    <Button
+        android:id="@+id/saveCard_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:onClick="openScanner"
+        android:text="@string/activitySaveCard_saveCardButton_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardName_editText" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

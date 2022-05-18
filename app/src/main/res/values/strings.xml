@@ -1,17 +1,17 @@
 <resources>
     <string name="app_name">MyFinances</string>
-    <string name="logIn_screen">Ekran logowania</string>
-    <string name="logIn_button">Zaloguj się</string>
-    <string name="register_button">Zarejestruj się</string>
-    <string name="e_mail_label">E-mail:</string>
-    <string name="password_label">Hasło:</string>
-    <string name="singOut_label">Wyloguj się</string>
-    <string name="register_activity">Zajejestruj się</string>
-    <string name="logInViaGoogle_button">Zaloguj się przez google</string>
-    <string name="title_activity_maps">Map</string>
-    <string name="return_label">Cofnij do wszystkich</string>
-    <string name="fav_button">Ulubione</string>
-    <string name="barCodeScannerButton_label">Dodaj kartę</string>
-    <string name="save_card_button">Zeskanuj kartę</string>
-    <string name="card_name_label">Nazwa karty:</string>
+    <string name="activityLogIn_activityTextView_title">Ekran logowania</string>
+    <string name="activityLogIn_emailTextView_text">E-mail:</string>
+    <string name="activityLogIn_passwordTextView_text">Hasło:</string>
+    <string name="activityLogIn_logInButton_text">Zaloguj się</string>
+    <string name="activityLogIn_registerButton_text">Zarejestruj się</string>
+    <string name="activityMain_barCodeScannerButton_text">Dodaj kartę</string>
+    <string name="activityMain_singOutButton_text">Wyloguj się</string>
+    <string name="activityRegister_registerTextView_title">Zajejestruj się</string>
+    <string name="activityRegister_emailTextView_text">E-mail:</string>
+    <string name="activityRegister_passwordTextView_text">Hasło:</string>
+    <string name="activityRegister_registerButton_text">Zarejestruj się</string>
+    <string name="activitySaveCard_saveCardTextView_text">Dodawanie karty</string>
+    <string name="activitySaveCard_cardNameTextView_text">Nazwa karty:</string>
+    <string name="activitySaveCard_saveCardButton_text">Zeskanuj kartę</string>
 </resources>
