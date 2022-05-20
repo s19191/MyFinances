@@ -13,6 +13,9 @@
             android:name=".SaveCardActivity"
             android:exported="false" />
         <activity
+            android:name=".ViewBarCodeActivity"
+            android:exported="false" />
+        <activity
             android:name=".RegisterActivity"
             android:exported="true" />
         <activity
