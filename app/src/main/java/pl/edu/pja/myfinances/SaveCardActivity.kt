@@ -6,16 +6,20 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.journeyapps.barcodescanner.ScanContract
 import com.journeyapps.barcodescanner.ScanIntentResult
 import com.journeyapps.barcodescanner.ScanOptions
 import pl.edu.pja.myfinances.databinding.ActivitySaveCardBinding
-import pl.edu.pja.myfinances.model.Card
 
 class SaveCardActivity : AppCompatActivity() {
     private val binding by lazy { ActivitySaveCardBinding.inflate(layoutInflater) }
     private lateinit var auth: FirebaseAuth
+    lateinit var nameTmp: String
+
     private val barcodeLauncher = registerForActivityResult(ScanContract()) { result: ScanIntentResult ->
         if (result.contents == null) {
             Toast.makeText(
@@ -29,20 +33,42 @@ class SaveCardActivity : AppCompatActivity() {
                 "Scanned: " + result.contents,
                 Toast.LENGTH_LONG
             ).show()
-            card.barCode = result.contents
-            FirebaseDatabase.getInstance()
+
+            FirebaseDatabase
+                .getInstance()
                 .getReference(auth.uid!!)
                 .child("cards")
-                .push()
-                .setValue(
-                    card
-                ).addOnCompleteListener {
-                    finish()
-                }
+                .child(result.contents)
+                .addListenerForSingleValueEvent(object : ValueEventListener {
+                    override fun onDataChange(dataSnapshot: DataSnapshot) {
+                        if(dataSnapshot.exists()) {
+                            Toast.makeText(
+                                this@SaveCardActivity,
+                                "Karta z tym kodem kreskowym jest już dodana!",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        } else {
+                            FirebaseDatabase.getInstance()
+                                .getReference(auth.uid!!)
+                                .child("cards")
+                                .child(result.contents)
+                                .setValue(nameTmp)
+                                .addOnCompleteListener {
+                                    finish()
+                                }
+                        }
+                    }
+                    override fun onCancelled(error: DatabaseError) {
+                        Toast.makeText(
+                            this@SaveCardActivity,
+                            "Error: ${error.message}",
+                            Toast.LENGTH_LONG
+                        ).show()
+//                        Log.w(TAG, "Failed to read value.", error.toException())
+                    }
+                })
         }
     }
-
-    lateinit var card: Card
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,13 +82,10 @@ class SaveCardActivity : AppCompatActivity() {
     }
 
     fun openScanner(view: View) {
-        val cardName = binding.cardName.text.toString()
+        val cardName = binding.cardNameEditText.text.toString()
 
         if (cardName.isNotEmpty()) {
-            card = Card(
-                cardName,
-                ""
-            )
+            nameTmp = cardName
 
             val options = ScanOptions()
 //        options.setDesiredBarcodeFormats(ScanOptions.ONE_D_CODE_TYPES)
@@ -71,7 +94,7 @@ class SaveCardActivity : AppCompatActivity() {
 //
 //        options.setBeepEnabled(false)
 //        options.setBarcodeImageEnabled(true)
-            val aaa = barcodeLauncher.launch(options)
+            barcodeLauncher.launch(options)
         } else {
             Toast.makeText(this, "Wprowadź nazwę karty!", Toast.LENGTH_SHORT).show()
         }

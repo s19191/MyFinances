@@ -52,17 +52,20 @@ class MainActivity : AppCompatActivity() {
             .addValueEventListener(object : ValueEventListener {
                 @RequiresApi(Build.VERSION_CODES.O)
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
-                    val genericTypeIndicator : GenericTypeIndicator<Map<String, Card>> =
-                        object : GenericTypeIndicator<Map<String, Card>>() {}
+                    val genericTypeIndicator : GenericTypeIndicator<Map<String, String>> =
+                        object : GenericTypeIndicator<Map<String, String>>() {}
                     val value = dataSnapshot.getValue(genericTypeIndicator)
                     var cards: MutableList<Card> = mutableListOf()
                     value?.forEach {
                         cards.add(
                             Card(
-                                it.value.name,
-                                it.value.barCode
+                                it.key,
+                                it.value
                             )
                         )
+                    }
+                    cards.sortBy {
+                        it.name
                     }
                     cardsAdapter.cards = cards
                 }
