@@ -21,7 +21,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         auth = FirebaseAuth.getInstance()
-
         if (auth.currentUser == null) {
             startActivity(Intent(this, LogInActivity::class.java))
         }
@@ -52,7 +51,7 @@ class MainActivity : AppCompatActivity() {
             .addValueEventListener(object : ValueEventListener {
                 @RequiresApi(Build.VERSION_CODES.O)
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
-                    val genericTypeIndicator : GenericTypeIndicator<Map<String, String>> =
+                    val genericTypeIndicator: GenericTypeIndicator<Map<String, String>> =
                         object : GenericTypeIndicator<Map<String, String>>() {}
                     val value = dataSnapshot.getValue(genericTypeIndicator)
                     var cards: MutableList<Card> = mutableListOf()
