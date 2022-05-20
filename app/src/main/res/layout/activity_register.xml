@@ -6,17 +6,28 @@
     android:layout_height="match_parent"
     tools:context=".RegisterActivity">
 
-    <EditText
-        android:id="@+id/password_editText"
-        android:layout_width="0dp"
+    <TextView
+        android:id="@+id/register_textView"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="16dp"
-        android:ems="10"
-        android:inputType="textPassword"
-        app:layout_constraintBaseline_toBaselineOf="@+id/password_label"
+        android:text="@string/activityRegister_registerTextView_title"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/password_label" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/email_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:text="@string/activityRegister_emailTextView_text"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/register_textView" />
 
     <EditText
         android:id="@+id/email_editText"
@@ -26,22 +37,31 @@
         android:layout_marginEnd="16dp"
         android:ems="10"
         android:inputType="textEmailAddress"
-        app:layout_constraintBaseline_toBaselineOf="@+id/email_label"
+        app:layout_constraintBaseline_toBaselineOf="@+id/email_textView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/email_label" />
+        app:layout_constraintStart_toEndOf="@+id/email_textView" />
 
     <TextView
-        android:id="@+id/activity_label"
+        android:id="@+id/password_textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
-        android:layout_marginEnd="16dp"
-        android:text="@string/register_activity"
-        android:textAppearance="@style/TextAppearance.AppCompat.Title"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:text="@string/activityRegister_passwordTextView_text"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/email_editText" />
+
+    <EditText
+        android:id="@+id/password_editText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:ems="10"
+        android:inputType="textPassword"
+        app:layout_constraintBaseline_toBaselineOf="@+id/password_textView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/password_textView" />
 
     <Button
         android:id="@+id/register_button"
@@ -51,30 +71,10 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:onClick="register"
-        android:text="@string/register_button"
+        android:text="@string/activityRegister_registerButton_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/password_editText" />
-
-    <TextView
-        android:id="@+id/email_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
-        android:text="@string/e_mail_label"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/activity_label" />
-
-    <TextView
-        android:id="@+id/password_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
-        android:text="@string/password_label"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/email_editText" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
