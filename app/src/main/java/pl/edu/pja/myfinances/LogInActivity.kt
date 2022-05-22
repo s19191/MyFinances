@@ -138,7 +138,8 @@ class LogInActivity : AppCompatActivity() {
         if (requestCode == REGISTER_REQ && resultCode == Activity.RESULT_OK) {
             finish()
         } else super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REGISTER_VIA_GOOGLE_REQ) {
+
+        if (requestCode == REGISTER_VIA_GOOGLE_REQ && resultCode == Activity.RESULT_OK) {
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
             try {
                 val account = task.getResult(ApiException::class.java)!!
@@ -150,6 +151,6 @@ class LogInActivity : AppCompatActivity() {
                     Toast.LENGTH_SHORT
                 ).show()
             }
-        }
+        } else super.onActivityResult(requestCode, resultCode, data)
     }
 }
