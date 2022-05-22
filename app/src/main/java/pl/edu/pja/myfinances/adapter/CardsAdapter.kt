@@ -1,12 +1,14 @@
 package pl.edu.pja.myfinances.adapter
 
 import android.app.AlertDialog
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
+import pl.edu.pja.myfinances.ViewBarCodeActivity
 import pl.edu.pja.myfinances.databinding.ItemCardBinding
 import pl.edu.pja.myfinances.model.Card
 
@@ -28,7 +30,14 @@ class CardsAdapter : RecyclerView.Adapter<CardItem>() {
             .also { holder ->
                 auth = FirebaseAuth.getInstance()
                 binding.root.setOnClickListener {
-
+                    parent
+                        .context
+                        .startActivity(
+                            Intent(parent.context, ViewBarCodeActivity::class.java)
+                                .putExtra("barCode", cards[holder.layoutPosition].barCode)
+                                .putExtra("name", cards[holder.layoutPosition].name)
+                                .putExtra("formatName", cards[holder.layoutPosition].formatName)
+                        )
                 }
                 binding.root.setOnLongClickListener {
                     removeCard(holder.layoutPosition, parent)

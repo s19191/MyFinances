@@ -14,6 +14,7 @@ import com.journeyapps.barcodescanner.ScanContract
 import com.journeyapps.barcodescanner.ScanIntentResult
 import com.journeyapps.barcodescanner.ScanOptions
 import pl.edu.pja.myfinances.databinding.ActivitySaveCardBinding
+import pl.edu.pja.myfinances.model.CardToDatabase
 
 class SaveCardActivity : AppCompatActivity() {
     private val binding by lazy { ActivitySaveCardBinding.inflate(layoutInflater) }
@@ -34,6 +35,8 @@ class SaveCardActivity : AppCompatActivity() {
                 Toast.LENGTH_LONG
             ).show()
 
+            result.formatName
+
             FirebaseDatabase
                 .getInstance()
                 .getReference(auth.uid!!)
@@ -52,7 +55,10 @@ class SaveCardActivity : AppCompatActivity() {
                                 .getReference(auth.uid!!)
                                 .child("cards")
                                 .child(result.contents)
-                                .setValue(nameTmp)
+                                .setValue(CardToDatabase(
+                                    nameTmp,
+                                    result.formatName
+                                ))
                                 .addOnCompleteListener {
                                     finish()
                                 }
