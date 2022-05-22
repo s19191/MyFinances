@@ -44,7 +44,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun scanBarCode(view: View) {
-        if (checkCameraPermissions())
         startActivity(Intent(this, SaveCardActivity::class.java))
     }
 
@@ -61,7 +60,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun executeCall() {
-        auth.currentUser.let {
+        auth.currentUser?.let {
             FirebaseDatabase
                 .getInstance()
                 .getReference(auth.uid!!)

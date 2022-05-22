@@ -6,6 +6,7 @@ import android.graphics.Bitmap
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.MultiFormatWriter
@@ -13,14 +14,25 @@ import com.google.zxing.common.BitMatrix
 import pl.edu.pja.myfinances.databinding.ActivityViewBarCodeBinding
 import pl.edu.pja.myfinances.model.Card
 
-const val EDIT_REQ = 3
-
 class ViewBarCodeActivity : AppCompatActivity() {
     private val binding by lazy { ActivityViewBarCodeBinding.inflate(layoutInflater) }
     private lateinit var multiFormatWriter: MultiFormatWriter
     private lateinit var bitMatrix: BitMatrix
     private lateinit var card: Card
     private lateinit var bitmap: Bitmap
+
+    private val editResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            val data: Intent? = result.data
+            if (data != null) {
+                val newName = data.getStringExtra("newName")
+                newName.let {
+                    binding.cardNameDetailsTextView.text = newName
+                    card.name = newName!!
+                }
+            }
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,24 +75,11 @@ class ViewBarCodeActivity : AppCompatActivity() {
     }
 
     fun editCard(view: View) {
-        startActivityForResult(
+        editResultLauncher.launch(
             Intent(this, EditCardActivity::class.java)
                 .putExtra("barCode", card.barCode)
                 .putExtra("name", card.name)
-                .putExtra("formatName", card.formatName),
-            EDIT_REQ
+                .putExtra("formatName", card.formatName)
         )
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == EDIT_REQ && resultCode == Activity.RESULT_OK) {
-            if (data != null) {
-                val newName = data.getStringExtra("newName")
-                newName.let {
-                    binding.cardNameDetailsTextView.text = newName
-                    card.name = newName!!
-                }
-            }
-        } else super.onActivityResult(requestCode, resultCode, data)
     }
 }

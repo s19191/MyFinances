@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -16,13 +17,33 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import pl.edu.pja.myfinances.databinding.ActivityLogInBinding
 
-const val REGISTER_REQ = 1
-const val REGISTER_VIA_GOOGLE_REQ = 2
-
 class LogInActivity : AppCompatActivity() {
     private val binding by lazy { ActivityLogInBinding.inflate(layoutInflater) }
     private lateinit var auth: FirebaseAuth
     private lateinit var mGoogleSignInClient: GoogleSignInClient
+
+    private val registerResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            finish()
+        }
+    }
+
+    private val registerViaGoogleResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            val data: Intent? = result.data
+            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
+            try {
+                val account = task.getResult(ApiException::class.java)!!
+                firebaseAuthWithGoogle(account.idToken!!)
+            } catch (e: ApiException) {
+                Toast.makeText(
+                    this,
+                    "Error: ${e.message}",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,8 +64,9 @@ class LogInActivity : AppCompatActivity() {
         }
 
         binding.logInViaGoogleButton.setOnClickListener {
-            val signInIntent = mGoogleSignInClient.signInIntent
-            startActivityForResult(signInIntent, REGISTER_VIA_GOOGLE_REQ)
+            registerViaGoogleResultLauncher.launch(
+                mGoogleSignInClient.signInIntent
+            )
         }
     }
 
@@ -131,26 +153,8 @@ class LogInActivity : AppCompatActivity() {
     }
 
     fun register(view: View) {
-        startActivityForResult(Intent(this, RegisterActivity::class.java), REGISTER_REQ)
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == REGISTER_REQ && resultCode == Activity.RESULT_OK) {
-            finish()
-        } else super.onActivityResult(requestCode, resultCode, data)
-
-        if (requestCode == REGISTER_VIA_GOOGLE_REQ && resultCode == Activity.RESULT_OK) {
-            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
-            try {
-                val account = task.getResult(ApiException::class.java)!!
-                firebaseAuthWithGoogle(account.idToken!!)
-            } catch (e: ApiException) {
-                Toast.makeText(
-                    this,
-                    "Error: ${e.message}",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-        } else super.onActivityResult(requestCode, resultCode, data)
+        registerResultLauncher.launch(
+            Intent(this, RegisterActivity::class.java)
+        )
     }
 }
