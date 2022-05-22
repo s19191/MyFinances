@@ -90,7 +90,7 @@ class SaveCardActivity : AppCompatActivity() {
     fun openScanner(view: View) {
         val cardName = binding.cardNameEditText.text.toString()
 
-        if (cardName.isNotEmpty()) {
+        if (cardName.isNotEmpty() && cardName.length < 21) {
             nameTmp = cardName
 
             val options = ScanOptions()

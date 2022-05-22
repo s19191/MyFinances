@@ -20,13 +20,14 @@ class ViewBarCodeActivity : AppCompatActivity() {
     private lateinit var multiFormatWriter: MultiFormatWriter
     private lateinit var bitMatrix: BitMatrix
     private lateinit var card: Card
+    private lateinit var bitmap: Bitmap
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        val bundle :Bundle ?=intent.extras
-        if (bundle!=null){
+        val bundle :Bundle ?= intent.extras
+        if (bundle != null) {
             val barCode = bundle.getString("barCode")
             val name = bundle.getString("name")
             val formatName = bundle.getString("formatName")
@@ -38,18 +39,14 @@ class ViewBarCodeActivity : AppCompatActivity() {
                 )
             }
         }
-
-        drawBarCode(card.barCode)
+        drawBarCode()
+        setDetails()
     }
 
-    private fun drawBarCode(contents: String){
+    private fun drawBarCode(){
         multiFormatWriter = MultiFormatWriter()
-        println("Width " + binding.barCodeImageView.width)
-        println("Height " + binding.barCodeImageView.height)
-        println("Max width " + binding.barCodeImageView.maxWidth)
-        println("Max height " + binding.barCodeImageView.maxHeight)
-        bitMatrix = multiFormatWriter.encode(contents, BarcodeFormat.valueOf(card.formatName), binding.barCodeImageView.maxWidth, binding.barCodeImageView.maxHeight)
-        val bitmap: Bitmap = Bitmap.createBitmap(binding.barCodeImageView.maxWidth, binding.barCodeImageView.maxHeight, Bitmap.Config.RGB_565)
+        bitMatrix = multiFormatWriter.encode(card.barCode, BarcodeFormat.valueOf(card.formatName), binding.barCodeImageView.maxWidth, binding.barCodeImageView.maxHeight)
+        bitmap = Bitmap.createBitmap(binding.barCodeImageView.maxWidth, binding.barCodeImageView.maxHeight, Bitmap.Config.RGB_565)
 
         for (i in 0 until binding.barCodeImageView.maxWidth) {
             for (j in 0 until binding.barCodeImageView.maxHeight) {
@@ -60,13 +57,30 @@ class ViewBarCodeActivity : AppCompatActivity() {
         binding.barCodeImageView.setImageBitmap(bitmap)
     }
 
+    private fun setDetails() {
+        binding.cardNameDetailsTextView.text = card.name
+        binding.barCodeDetailsTextView.text = card.barCode
+    }
+
     fun editCard(view: View) {
-        startActivityForResult(Intent(this, EditCardActivity::class.java), EDIT_REQ)
+        startActivityForResult(
+            Intent(this, EditCardActivity::class.java)
+                .putExtra("barCode", card.barCode)
+                .putExtra("name", card.name)
+                .putExtra("formatName", card.formatName),
+            EDIT_REQ
+        )
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == EDIT_REQ && resultCode == Activity.RESULT_OK) {
-
+            if (data != null) {
+                val newName = data.getStringExtra("newName")
+                newName.let {
+                    binding.cardNameDetailsTextView.text = newName
+                    card.name = newName!!
+                }
+            }
         } else super.onActivityResult(requestCode, resultCode, data)
     }
 }
