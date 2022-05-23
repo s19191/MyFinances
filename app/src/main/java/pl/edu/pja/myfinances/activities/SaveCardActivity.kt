@@ -1,7 +1,6 @@
-package pl.edu.pja.myfinances
+package pl.edu.pja.myfinances.activities
 
 import android.Manifest
-import android.content.ContentValues
 import android.content.ContentValues.TAG
 import android.content.Intent
 import android.os.Bundle

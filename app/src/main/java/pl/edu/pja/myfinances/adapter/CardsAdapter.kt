@@ -10,7 +10,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
-import pl.edu.pja.myfinances.ViewBarCodeActivity
+import pl.edu.pja.myfinances.activities.ViewBarCodeActivity
 import pl.edu.pja.myfinances.databinding.ItemCardBinding
 import pl.edu.pja.myfinances.model.Card
 

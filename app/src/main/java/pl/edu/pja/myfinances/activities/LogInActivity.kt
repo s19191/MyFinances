@@ -1,4 +1,4 @@
-package pl.edu.pja.myfinances
+package pl.edu.pja.myfinances.activities
 
 import android.app.Activity
 import android.content.ContentValues
@@ -16,6 +16,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
+import pl.edu.pja.myfinances.R
 import pl.edu.pja.myfinances.databinding.ActivityLogInBinding
 
 class LogInActivity : AppCompatActivity() {
