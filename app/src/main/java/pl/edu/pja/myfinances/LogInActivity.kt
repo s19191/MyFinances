@@ -20,21 +20,29 @@ import pl.edu.pja.myfinances.databinding.ActivityLogInBinding
 class LogInActivity : AppCompatActivity() {
     private val binding by lazy { ActivityLogInBinding.inflate(layoutInflater) }
     private lateinit var auth: FirebaseAuth
-    private lateinit var mGoogleSignInClient: GoogleSignInClient
+    private lateinit var googleSignInClient: GoogleSignInClient
 
-    private val registerResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+    private val registerResultLauncher = registerForActivityResult(
+        ActivityResultContracts
+            .StartActivityForResult())
+    { result ->
         if (result.resultCode == Activity.RESULT_OK) {
             finish()
         }
     }
 
-    private val registerViaGoogleResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+    private val registerViaGoogleResultLauncher = registerForActivityResult(
+        ActivityResultContracts
+            .StartActivityForResult())
+    { result ->
         if (result.resultCode == Activity.RESULT_OK) {
             val data: Intent? = result.data
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
             try {
-                val account = task.getResult(ApiException::class.java)!!
-                firebaseAuthWithGoogle(account.idToken!!)
+                val account = task.getResult(ApiException::class.java)
+                account.idToken?.let {
+                    firebaseAuthWithGoogle(account.idToken!!)
+                }
             } catch (e: ApiException) {
                 Toast.makeText(
                     this,
@@ -49,24 +57,24 @@ class LogInActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        val gso = GoogleSignInOptions
-            .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken("436610871873-em94jn6ufa6pm66mht82tr0hsscd2o6l.apps.googleusercontent.com")
-//            .requestIdToken(binding.default_web_client_id)
-            .requestEmail()
-            .build()
-
-        mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
-
         auth = FirebaseAuth.getInstance()
         if (auth.currentUser != null) {
             finish()
         }
 
+        val gso = GoogleSignInOptions
+            .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(getString(R.string.your_web_client_id))
+            .requestEmail()
+            .build()
+
+        googleSignInClient = GoogleSignIn.getClient(this, gso)
+
         binding.logInViaGoogleButton.setOnClickListener {
-            registerViaGoogleResultLauncher.launch(
-                mGoogleSignInClient.signInIntent
-            )
+            registerViaGoogleResultLauncher
+                .launch(
+                    googleSignInClient.signInIntent
+                )
         }
     }
 
@@ -86,7 +94,6 @@ class LogInActivity : AppCompatActivity() {
                     finish()
                 } else {
                     Log.w(TAG, "signInWithCredential:failure", task.exception)
-                    //TODO: Do późniejszego usunięcia
                     Toast.makeText(
                         this,
                         "Nieprawidłowe dane logowania!",

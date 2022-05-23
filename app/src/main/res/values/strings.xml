@@ -18,4 +18,6 @@
     <string name="activityEditCard_editCardTextView_title">Edytuj dane karty</string>
     <string name="activityEditCard_newCardNameTextView_text">Nowa nazwa karty:</string>
     <string name="activityEditCard_saveChangesButton_text">Zapisz zmiany</string>
+
+    <string name="your_web_client_id">436610871873-em94jn6ufa6pm66mht82tr0hsscd2o6l.apps.googleusercontent.com</string>
 </resources>
