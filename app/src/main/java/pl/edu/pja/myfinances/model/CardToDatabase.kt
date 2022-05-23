@@ -1,8 +1,8 @@
 package pl.edu.pja.myfinances.model
 
 data class CardToDatabase(
-    val name: String,
-    val formatName: String
+    var name: String,
+    var formatName: String
 ) {
     constructor() : this("", "")
 }
