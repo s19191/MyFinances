@@ -1,6 +1,7 @@
 package pl.edu.pja.myfinances
 
 import android.Manifest
+import android.content.ContentValues
 import android.content.ContentValues.TAG
 import android.content.Intent
 import android.os.Bundle
@@ -77,15 +78,13 @@ class SaveCardActivity : AppCompatActivity() {
                                     .addOnCompleteListener {
                                         finish()
                                     }
+                                    .addOnFailureListener {
+                                        Log.w(TAG, "savingCard SaveCardActivity: ", it.fillInStackTrace())
+                                    }
                             }
                         }
                         override fun onCancelled(error: DatabaseError) {
-                            Toast.makeText(
-                                this@SaveCardActivity,
-                                "Error: ${error.message}",
-                                Toast.LENGTH_LONG
-                            ).show()
-                            Log.w(TAG, "Failed to read value.", error.toException())
+                            Log.w(TAG, "readFromDatabase Failed to read value. SaveCardActivity: ", error.toException().fillInStackTrace())
                         }
                     })
             }

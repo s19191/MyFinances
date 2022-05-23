@@ -1,8 +1,10 @@
 package pl.edu.pja.myfinances
 
 import android.app.Activity
+import android.content.ContentValues
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
@@ -58,8 +60,14 @@ class EditCardActivity : AppCompatActivity() {
                 .addOnCompleteListener {
                     val resultIntent = Intent()
                         .putExtra("newName", newCardName)
-                    setResult(Activity.RESULT_OK, resultIntent)
+                    setResult(
+                        Activity.RESULT_OK,
+                        resultIntent
+                    )
                     finish()
+                }
+                .addOnFailureListener {
+                    Log.w(ContentValues.TAG, "editingCard EditCardActivity: ", it.fillInStackTrace())
                 }
         }
     }

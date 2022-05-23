@@ -1,6 +1,8 @@
 package pl.edu.pja.myfinances
 
+import android.content.ContentValues
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -49,33 +51,20 @@ class RegisterActivity : AppCompatActivity() {
             ).addOnSuccessListener {
                 Toast.makeText(
                     this,
-                    "Zarejestrowano",
+                    "Zarejestrowano!",
                     Toast.LENGTH_SHORT
                 ).show()
                 auth.signInWithEmailAndPassword(
                     email,
                     password
                 ).addOnSuccessListener {
-                    Toast.makeText(
-                        this,
-                        "Zalogowano ${it.user?.uid} ${it.user?.email}",
-                        Toast.LENGTH_SHORT
-                    ).show()
                     setResult(RESULT_OK)
                     finish()
                 }.addOnFailureListener{
-                    Toast.makeText(
-                        this,
-                        "Error: ${it.message}",
-                        Toast.LENGTH_LONG
-                    ).show()
+                    Log.w(ContentValues.TAG, "logIn RegisterActivity: ", it.fillInStackTrace())
                 }
             }.addOnFailureListener {
-                Toast.makeText(
-                    this,
-                    "Error: ${it.message}",
-                    Toast.LENGTH_LONG
-                ).show()
+                Log.w(ContentValues.TAG, "register RegisterActivity: ", it.fillInStackTrace())
             }
         }
     }

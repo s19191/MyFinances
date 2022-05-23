@@ -1,7 +1,9 @@
 package pl.edu.pja.myfinances.adapter
 
 import android.app.AlertDialog
+import android.content.ContentValues
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
@@ -72,11 +74,7 @@ class CardsAdapter : RecyclerView.Adapter<CardItem>() {
                         ).show()
                     }
                     .addOnFailureListener {
-                        Toast.makeText(
-                            parent.context,
-                            "Error: ${it.message}",
-                            Toast.LENGTH_LONG
-                        ).show()
+                        Log.w(ContentValues.TAG, "deletingCard CardsAdapter: ", it.fillInStackTrace())
                     }
             }
             .setNegativeButton("Nie") { dialog, _ ->

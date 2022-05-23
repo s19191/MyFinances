@@ -1,10 +1,11 @@
 package pl.edu.pja.myfinances
 
+import android.content.ContentValues
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -81,11 +82,7 @@ class MainActivity : AppCompatActivity() {
                         cardsAdapter.cards = cards
                     }
                     override fun onCancelled(error: DatabaseError) {
-                        Toast.makeText(
-                            this@MainActivity,
-                            "Error: ${error.message}",
-                            Toast.LENGTH_LONG
-                        ).show()
+                        Log.w(ContentValues.TAG, "readFromDatabase Failed to read value. MainActivity: ", error.toException().fillInStackTrace())
                     }
                 })
         }

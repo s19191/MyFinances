@@ -1,6 +1,7 @@
 package pl.edu.pja.myfinances
 
 import android.app.Activity
+import android.content.ContentValues
 import android.content.ContentValues.TAG
 import android.content.Intent
 import android.os.Bundle
@@ -44,11 +45,7 @@ class LogInActivity : AppCompatActivity() {
                     firebaseAuthWithGoogle(account.idToken!!)
                 }
             } catch (e: ApiException) {
-                Toast.makeText(
-                    this,
-                    "Error: ${e.message}",
-                    Toast.LENGTH_SHORT
-                ).show()
+                Log.w(TAG, "logInViaGoogle LogInActivity: ", e.fillInStackTrace())
             }
         }
     }
@@ -81,25 +78,11 @@ class LogInActivity : AppCompatActivity() {
     private fun firebaseAuthWithGoogle(idToken: String) {
         val credential = GoogleAuthProvider.getCredential(idToken, null)
         auth.signInWithCredential(credential)
-            .addOnCompleteListener(this) { task ->
-                if (task.isSuccessful) {
-                    Log.d(TAG, "signInWithCredential:success")
-                    //TODO: Do późniejszego usunięcia
-                    val user = auth.currentUser
-                    Toast.makeText(
-                        this,
-                        "Zalogowano ${user?.uid} ${user?.email}",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    finish()
-                } else {
-                    Log.w(TAG, "signInWithCredential:failure", task.exception)
-                    Toast.makeText(
-                        this,
-                        "Nieprawidłowe dane logowania!",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
+            .addOnSuccessListener {
+                finish()
+            }
+            .addOnFailureListener {
+                Log.w(TAG, "logInViaGoogle signInWithCredential LogInActivity: failure", it.fillInStackTrace())
             }
     }
 
@@ -136,26 +119,11 @@ class LogInActivity : AppCompatActivity() {
                     email,
                     password
                 ).addOnSuccessListener {
-                    Toast.makeText(
-                        this,
-                        "Zalogowano ${it.user?.uid} ${it.user?.email}",
-                        Toast.LENGTH_SHORT
-                    ).show()
                     finish()
                 }.addOnFailureListener {
-                    Toast.makeText(
-                        this,
-                        "Nieprawidłowe dane logowania!",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    Log.w(ContentValues.TAG, "logIn LogInActivity: ", it.fillInStackTrace())
                 }
             }
-        } else {
-            Toast.makeText(
-                this,
-                "Zalogowano ${auth.currentUser?.uid} ${auth.currentUser?.email}",
-                Toast.LENGTH_SHORT
-            ).show()
         }
     }
 
