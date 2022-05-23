@@ -106,7 +106,10 @@ class SaveCardActivity : AppCompatActivity() {
         val cardName = binding.cardNameEditText.text.toString()
 
         if (cardName.isNotEmpty() && cardName.length < 21) {
-            cardToDatabase.name = cardName
+            cardToDatabase = CardToDatabase(
+                cardName,
+                ""
+            )
 
             requestPermissionLauncher.launch(Manifest.permission.CAMERA)
         } else {
