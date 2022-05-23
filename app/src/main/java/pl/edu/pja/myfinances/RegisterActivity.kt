@@ -52,19 +52,25 @@ class RegisterActivity : AppCompatActivity() {
                     "Zarejestrowano",
                     Toast.LENGTH_SHORT
                 ).show()
-            }
-            auth.signInWithEmailAndPassword(
-                email,
-                password
-            ).addOnSuccessListener {
-                Toast.makeText(
-                    this,
-                    "Zalogowano ${it.user?.uid} ${it.user?.email}",
-                    Toast.LENGTH_SHORT
-                ).show()
-                setResult(RESULT_OK)
-                finish()
-            }.addOnFailureListener{
+                auth.signInWithEmailAndPassword(
+                    email,
+                    password
+                ).addOnSuccessListener {
+                    Toast.makeText(
+                        this,
+                        "Zalogowano ${it.user?.uid} ${it.user?.email}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    setResult(RESULT_OK)
+                    finish()
+                }.addOnFailureListener{
+                    Toast.makeText(
+                        this,
+                        "Error: ${it.message}",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+            }.addOnFailureListener {
                 Toast.makeText(
                     this,
                     "Error: ${it.message}",

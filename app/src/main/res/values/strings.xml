@@ -1,6 +1,7 @@
 <resources>
-    <string name="app_name">MyFinances</string>
-    <string name="activityLogIn_activityTextView_title">Ekran logowania</string>
+    <string name="app_name">My Cards</string>
+
+    <string name="activityLogIn_logInTextView_title">Ekran logowania</string>
     <string name="activityLogIn_emailTextView_text">E-mail:</string>
     <string name="activityLogIn_passwordTextView_text">Hasło:</string>
     <string name="activityLogIn_logInButton_text">Zaloguj się</string>
@@ -14,4 +15,10 @@
     <string name="activitySaveCard_saveCardTextView_text">Dodawanie karty</string>
     <string name="activitySaveCard_cardNameTextView_text">Nazwa karty:</string>
     <string name="activitySaveCard_saveCardButton_text">Zeskanuj kartę</string>
+    <string name="activityViewBarCode_editButton_text">Edytuj dane karty</string>
+    <string name="activityEditCard_editCardTextView_title">Edytuj dane karty</string>
+    <string name="activityEditCard_newCardNameTextView_text">Nowa nazwa karty:</string>
+    <string name="activityEditCard_saveChangesButton_text">Zapisz zmiany</string>
+
+    <string name="your_web_client_id">436610871873-em94jn6ufa6pm66mht82tr0hsscd2o6l.apps.googleusercontent.com</string>
 </resources>

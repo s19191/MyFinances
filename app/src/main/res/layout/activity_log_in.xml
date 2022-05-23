@@ -13,7 +13,7 @@
       android:layout_marginStart="16dp"
       android:layout_marginTop="24dp"
       android:layout_marginEnd="16dp"
-      android:text="@string/activityLogIn_activityTextView_title"
+      android:text="@string/activityLogIn_logInTextView_title"
       android:textAppearance="@style/TextAppearance.AppCompat.Title"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
@@ -65,39 +65,39 @@
 
   <Button
       android:id="@+id/logIn_button"
-      android:layout_width="wrap_content"
+      android:layout_width="0dp"
       android:layout_height="wrap_content"
       android:layout_marginStart="8dp"
-      android:layout_marginTop="16dp"
       android:layout_marginEnd="8dp"
+      android:layout_marginBottom="8dp"
       android:onClick="logIn"
       android:text="@string/activityLogIn_logInButton_text"
+      app:layout_constraintBottom_toTopOf="@+id/logInViaGoogle_button"
       app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@+id/password_editText" />
+      app:layout_constraintStart_toStartOf="parent" />
 
   <com.google.android.gms.common.SignInButton
       android:id="@+id/logInViaGoogle_button"
-      android:layout_width="wrap_content"
+      android:layout_width="0dp"
       android:layout_height="wrap_content"
       android:layout_marginStart="8dp"
-      android:layout_marginTop="16dp"
       android:layout_marginEnd="8dp"
+      android:layout_marginBottom="8dp"
+      app:layout_constraintBottom_toTopOf="@+id/register_button"
       app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@+id/logIn_button" />
+      app:layout_constraintStart_toStartOf="parent" />
 
   <Button
       android:id="@+id/register_button"
-      android:layout_width="wrap_content"
+      android:layout_width="0dp"
       android:layout_height="wrap_content"
       android:layout_marginStart="8dp"
-      android:layout_marginTop="16dp"
       android:layout_marginEnd="8dp"
+      android:layout_marginBottom="8dp"
       android:onClick="register"
       android:text="@string/activityLogIn_registerButton_text"
+      app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@+id/logInViaGoogle_button" />
+      app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
