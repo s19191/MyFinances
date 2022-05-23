@@ -1,16 +1,12 @@
 package pl.edu.pja.myfinances
 
-import android.Manifest
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
@@ -18,8 +14,6 @@ import pl.edu.pja.myfinances.adapter.CardsAdapter
 import pl.edu.pja.myfinances.databinding.ActivityMainBinding
 import pl.edu.pja.myfinances.model.Card
 import pl.edu.pja.myfinances.model.CardToDatabase
-
-const val PERMISSIONS_REQUEST_CAMERA = 100
 
 class MainActivity : AppCompatActivity() {
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
@@ -94,19 +88,6 @@ class MainActivity : AppCompatActivity() {
                         ).show()
                     }
                 })
-        }
-    }
-
-    private fun checkCameraPermissions() : Boolean {
-        return if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(
-                this,
-                arrayOf(Manifest.permission.CAMERA),
-                PERMISSIONS_REQUEST_CAMERA
-            )
-            false
-        } else {
-            true
         }
     }
 }
