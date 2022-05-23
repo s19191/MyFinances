@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MyFinances</string>
+    <string name="app_name">My Cards</string>
     <string name="activityLogIn_logInTextView_title">Ekran logowania</string>
     <string name="activityLogIn_emailTextView_text">E-mail:</string>
     <string name="activityLogIn_passwordTextView_text">Hasło:</string>
