@@ -1,4 +1,4 @@
-package pl.edu.pja.myfinances.activities
+package pl.edu.pja.myfinances
 
 import android.Manifest
 import android.content.ContentValues.TAG

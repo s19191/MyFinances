@@ -14,21 +14,21 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyFinances">
         <activity
-            android:name=".activities.EditCardActivity"
+            android:name=".EditCardActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.SaveCardActivity"
+            android:name=".SaveCardActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.ViewBarCodeActivity"
+            android:name=".ViewBarCodeActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.RegisterActivity"
+            android:name=".RegisterActivity"
             android:exported="true" />
         <activity
-            android:name=".activities.LogInActivity"
+            android:name=".LogInActivity"
             android:exported="true" />
-        <activity android:name=".activities.MainActivity">
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

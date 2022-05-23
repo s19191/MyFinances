@@ -1,4 +1,4 @@
-package pl.edu.pja.myfinances.activities
+package pl.edu.pja.myfinances
 
 import android.app.Activity
 import android.content.Intent
