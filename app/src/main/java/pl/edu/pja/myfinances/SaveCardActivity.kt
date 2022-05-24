@@ -45,12 +45,6 @@ class SaveCardActivity : AppCompatActivity() {
                     Toast.LENGTH_LONG
                 ).show()
             } else {
-                Toast.makeText(
-                    this,
-                    "Scanned: " + result.contents,
-                    Toast.LENGTH_LONG
-                ).show()
-
                 cardToDatabase.formatName = result.formatName
 
                 FirebaseDatabase
@@ -67,6 +61,11 @@ class SaveCardActivity : AppCompatActivity() {
                                     Toast.LENGTH_LONG
                                 ).show()
                             } else {
+                                Toast.makeText(
+                                    this@SaveCardActivity,
+                                    "Zeskanowano: " + result.contents,
+                                    Toast.LENGTH_LONG
+                                ).show()
                                 FirebaseDatabase.getInstance()
                                     .getReference(auth.uid!!)
                                     .child("cards")
