@@ -56,7 +56,7 @@ class CardsAdapter : RecyclerView.Adapter<CardItem>() {
 
     private fun removeCard(position: Int, parent: ViewGroup) {
         val builder = AlertDialog.Builder(parent.context)
-        builder.setMessage("Czy na pewno chcesz usunać kartę?")
+        builder.setMessage("Czy na pewno chcesz usunąć kartę?")
             .setCancelable(false)
             .setPositiveButton("Tak") { _, _ ->
                 FirebaseDatabase

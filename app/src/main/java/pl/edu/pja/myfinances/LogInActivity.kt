@@ -16,7 +16,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
-import pl.edu.pja.myfinances.R
 import pl.edu.pja.myfinances.databinding.ActivityLogInBinding
 
 class LogInActivity : AppCompatActivity() {
